@@ -1,4 +1,3 @@
-index INT
 Künstler TEXT
 AlbumTitel TEXT
 Erscheinungsjahr INT
