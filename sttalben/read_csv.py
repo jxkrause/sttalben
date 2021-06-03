@@ -50,6 +50,7 @@ def recreate_table():
         dtype = row[1].iloc[1]
         create_sql = create_sql + f"\"{name}\" {dtype},"
     create_sql = create_sql[:-1] + ')'
+    print(create_sql)
     con.execute(create_sql)
 
     for query in recreate_query:
