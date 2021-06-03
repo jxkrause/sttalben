@@ -59,12 +59,21 @@ void query_db(sqlite3 * con,
   char  *err = nullptr;
   
   //collect entries
+  std::string xquery = "SELECT * from alben ";
+  std::string konjunktion = "WHERE ";
+  for(unsigned i=0; i<columns.size(); i++)
+    {
+      std::string eingabe = entries[i].get_text();
+      if(!eingabe.empty())
+	{
+	  xquery = xquery + konjunktion + " " + columns[i] + " = '" + eingabe + "' ";
+	  konjunktion = "AND ";
+	}
+    }
   
   //build query
-  std::string query = "SELECT * from alben";
-
   int ok = sqlite3_exec(con, 
-			query.c_str(),
+			xquery.c_str(),
 			CallbackQuery,
 			content,
 			&err);
