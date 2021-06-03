@@ -18,4 +18,6 @@ DB_URI = os.getenv('DB_URI')
 TABLE='alben'
 
 #struktur der Tabell wird hier gespeichert, letzte Spalte sind die Lieder
-table_struct = pd.read_csv('conf/columns.txt', sep=' ', header=None)
+install_dir = os.path.dirname(os.path.abspath(__file__))
+conf_file = os.path.join(install_dir, 'columns.txt')
+table_struct = pd.read_csv(conf_file, sep=' ', header=None)

@@ -55,15 +55,26 @@ def recreate_table():
     for query in recreate_query:
         con.execute(query)
 
+def write_header():
+    lst = table_struct.iloc[:,0].to_list()
+    print(';'.join(lst))
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Lesen Alben aus csv')
     parser.add_argument('fn', nargs='*', help='List von Dateinamen')
     parser.add_argument('-r', '--recreate', help='Tabelle neugenerieren',
                     action='store_true')
+    parser.add_argument('-t', '--template', 
+        help='Erzeuge Kopfzeile für csv-Datei', action='store_true')
+
     args = parser.parse_args()
 
     if args.recreate:
         recreate_table()
+
+    if args.template:
+        write_header()
 
     for x in args.fn:
         read_from_csv(x)

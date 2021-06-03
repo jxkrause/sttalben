@@ -9,6 +9,7 @@ from sqlalchemy import create_engine
 import pandas as pd
 from sttalben import table_struct, DB_URI, TABLE
 
+
 def search(args):
     """
     sucht in der Datenbank nach Alben und Liedern
@@ -52,7 +53,7 @@ def search(args):
     return ("Gefundene Lieder", df_lieder[spalten_ausser_index])
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Datenbank Abfragen Muski Alben')
+    parser = argparse.ArgumentParser(description='Datenbank Abfragen Musik Alben')
     for row in table_struct.iterrows():
         name = row[1].iloc[0]
         parser.add_argument('-'+name[0], '--'+name, help=name)

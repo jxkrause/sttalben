@@ -1,0 +1,4 @@
+Künstler TEXT
+AlbumTitel TEXT
+Erscheinungsjahr INT
+Liedertitel TEXT
