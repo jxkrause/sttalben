@@ -21,3 +21,6 @@ TABLE='alben'
 install_dir = os.path.dirname(os.path.abspath(__file__))
 conf_file = os.path.join(install_dir, 'columns.txt')
 table_struct = pd.read_csv(conf_file, sep=' ', header=None)
+
+spalten_ausser_lieder = table_struct.iloc[:-1,0].tolist()
+spalten_ausser_index = table_struct.iloc[:,0].tolist()

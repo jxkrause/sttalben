@@ -7,7 +7,7 @@ Musikalbendatenbank
 import argparse
 from sqlalchemy import create_engine
 import pandas as pd
-from sttalben import table_struct, DB_URI, TABLE
+from sttalben import table_struct, DB_URI, TABLE, spalten_ausser_index, spalten_ausser_lieder
 
 
 def search(args):
@@ -45,11 +45,9 @@ def search(args):
 
     #Auasgage
     if ausgabe == 0:
-        spalten_ausser_lieder = table_struct.iloc[:-1,0].tolist()
         df_alben = df_lieder[spalten_ausser_lieder].groupby(spalten_ausser_lieder, as_index=False).first()
         return ("Gefundene Alben", df_alben)
 
-    spalten_ausser_index = table_struct.iloc[:,0].tolist()
     return ("Gefundene Lieder", df_lieder[spalten_ausser_index])
 
 if __name__ == '__main__':

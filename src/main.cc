@@ -25,5 +25,4 @@ int main(int argc, char *argv[])
     win.show_all();
 
     app.run(win);
-
 }
