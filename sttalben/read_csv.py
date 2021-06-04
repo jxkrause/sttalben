@@ -24,19 +24,9 @@ def read_from_csv(fn):
         con.execute(f"SELECT * FROM {TABLE} LIMIT 1")
     except OperationalError:
         recreate_table()
-    df.to_sql(TABLE, con, if_exists = 'append')
+    df.to_sql(TABLE, con, if_exists = 'append', index=False)
     return df
 
-recreate_query = [f"DROP TABLE IF EXISTS {TABLE}",
-"""
-CREATE TABLE alben (
-	"index" INT,
-	"Künstler" TEXT,
-	"AlbumTitel" TEXT,
-	"Erscheinungsjahr" INT,
-	"Liedertitel" TEXT
-)
-"""]
 
 def recreate_table():
     """
@@ -52,9 +42,6 @@ def recreate_table():
     create_sql = create_sql[:-1] + ')'
     print(create_sql)
     con.execute(create_sql)
-
-    for query in recreate_query:
-        con.execute(query)
 
 def write_header():
     lst = table_struct.iloc[:,0].to_list()
