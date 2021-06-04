@@ -7,8 +7,7 @@ Musikalbendatenbank
 import argparse
 from sqlalchemy import create_engine
 import pandas as pd
-from sttalben import table_struct, DB_URI, TABLE, spalten_ausser_index, spalten_ausser_lieder
-
+from sttalben import *
 
 def search(args):
     """
@@ -26,7 +25,7 @@ def search(args):
             ausgabe = 1
 
     #baue Abfrage String
-    query = f"SELECT * FROM {TABLE} "
+    query = f"SELECT * FROM {TABLEV} "
     konjunktion = ['WHERE','AND']
     num = 0
     for row in table_struct.iterrows():

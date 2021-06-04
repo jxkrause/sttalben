@@ -10,18 +10,7 @@ void set_margins(Gtk::Widget &widget)
   widget.set_margin_bottom(x);  
 }
 
-//bis zu 32 Spalten mit Strings
-class MyModelColumns : public Gtk::TreeModel::ColumnRecord
-{
-public:
-  Gtk::TreeModelColumn<Glib::ustring> col[32];
-  
-  MyModelColumns(unsigned ncolumns)
-  {
-    for(unsigned i=0; i<ncolumns; i++)
-      add(col[i]);
-  }
-};
+
 
 /*
   Datenbank abfrage bei sqlite3

@@ -15,7 +15,9 @@ load_dotenv()
 _version_ = '0.1'
 
 DB_URI = os.getenv('DB_URI')
-TABLE='alben'
+TABLE0 = 'aalben'
+TABLE1 = 'lalben'
+TABLEV = 'valben'
 
 #struktur der Tabell wird hier gespeichert, letzte Spalte sind die Lieder
 install_dir = os.path.dirname(os.path.abspath(__file__))

@@ -5,6 +5,19 @@
 #include <gtkmm.h>
 #include "dbsqlite3.h"
 
+//bis zu 32 Spalten mit Strings
+class MyModelColumns : public Gtk::TreeModel::ColumnRecord
+{
+public:
+  Gtk::TreeModelColumn<Glib::ustring> col[32];
+  
+  MyModelColumns(unsigned ncolumns)
+  {
+    for(unsigned i=0; i<ncolumns; i++)
+      add(col[i]);
+  }
+};
+
 /*
   Fenster 
 */
