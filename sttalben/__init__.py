@@ -15,6 +15,9 @@ load_dotenv()
 _version_ = '0.1'
 
 DB_URI = os.getenv('DB_URI')
+if DB_URI is None:
+    print("DB_URI nicht gesetzt")
+    raise ValueError
 TABLE0 = 'aalben'
 TABLE1 = 'lalben'
 TABLEV = 'valben'

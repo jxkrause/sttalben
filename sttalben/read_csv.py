@@ -6,7 +6,7 @@ Musikalbendatenbank
 """
 import argparse
 from sqlalchemy import create_engine
-from sqlalchemy.exc import OperationalError
+from sqlalchemy.exc import OperationalError, ProgrammingError
 import pandas as pd
 from sttalben import *
 
@@ -35,7 +35,7 @@ def read_from_csv(fn):
     con = create_engine(DB_URI)
     try:
         con.execute(f"SELECT * FROM {TABLE0} LIMIT 1")
-    except OperationalError:
+    except (OperationalError, ProgrammingError):
         recreate_tables()
     #df.to_sql(TABLEV, con, if_exists = 'append', index=False)
     df_ids = fill_tablea(df, con)
