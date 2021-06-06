@@ -10,8 +10,6 @@ void set_margins(Gtk::Widget &widget)
   widget.set_margin_bottom(x);  
 }
 
-
-
 /*
   Datenbank abfrage bei sqlite3
 */
@@ -76,11 +74,24 @@ mywin::mywin(const std::vector<std::string> &columns,
   grid.attach(btok, 0, columns.size()+2, 2,1);
   btok.signal_clicked().connect([this, columns, tname] () {
 				  this->content->clear();
-				  query_db(this->con,
-					   columns,
-					   this->entries,
-					   this->content.operator->(),
-					   tname);
+				  try
+				    {
+				      query_db(this->con,
+					       columns,
+					       this->entries,
+					       this->content.operator->(),
+					       tname);
+				    }
+				  catch(const std::string &message)
+				    {
+				      Gtk::MessageDialog diag(*this,
+							      message,
+							      true,
+							      Gtk::MESSAGE_INFO,
+							      Gtk::BUTTONS_OK,
+							      true);
+				      diag.run();
+				    }
 				});
   
   //ausgabe

@@ -11,6 +11,10 @@ import pandas as pd
 from sttalben import *
 
 def fill_tablea(df, con):
+    """
+    Daten aus pandas in Datenbank -> Alben
+    return pandas DataFrame mit ids
+    """
     df_alben = df[spalten_ausser_lieder].groupby(spalten_ausser_lieder, as_index=False).first()
     df_alben.to_sql(TABLE0, con, if_exists = 'append', index=False)
     #finde ids aus db
@@ -19,17 +23,18 @@ def fill_tablea(df, con):
     return df_id
 
 def fill_tableb(df, con, df_ids):
+    """
+    Daten aus pandas in Datenbank -> Lieder
+    """
     df_lieder = df.merge(df_ids, on=spalten_ausser_lieder)
     df_lieder = df_lieder[['id', table_struct.iloc[-1,0]]]
     df_lieder.to_sql(TABLE1, con, if_exists = 'append', index=False)
-
 
 def read_from_csv(fn):
     """
     Liest Alben-Information aus csv-Datei (Trenner ;)
     und füllt DB damit
     """
-    print(fn)
     df = pd.read_csv(fn, sep=';')
     df.fillna(method='ffill', inplace=True)
     con = create_engine(DB_URI)
@@ -37,7 +42,6 @@ def read_from_csv(fn):
         con.execute(f"SELECT * FROM {TABLE0} LIMIT 1")
     except (OperationalError, ProgrammingError):
         recreate_tables()
-    #df.to_sql(TABLEV, con, if_exists = 'append', index=False)
     df_ids = fill_tablea(df, con)
     fill_tableb(df, con, df_ids)
     return df
@@ -56,7 +60,7 @@ def recreate_atable():
         dtype = row[1].iloc[1]
         create_sql = create_sql + f"\"{name}\" {dtype},"
     create_sql = create_sql[:-1] + ')'
-    print(create_sql)
+    #print(create_sql)
     con.execute(create_sql)
 
 def recreate_ltable():
@@ -71,7 +75,7 @@ def recreate_ltable():
     dtype = table_struct.iloc[-1,1]
     create_sql = create_sql + f"\"{name}\" {dtype},"
     create_sql = create_sql[:-1] + ')'
-    print(create_sql)
+    #print(create_sql)
     con.execute(create_sql)
 
 def recreate_vtable():
@@ -85,16 +89,18 @@ def recreate_vtable():
         name = row[1].iloc[0]
         create_sql = create_sql + f"\"{name}\","
     create_sql = create_sql[:-1] + f' FROM {TABLE0},{TABLE1} WHERE {TABLE0}.id = {TABLE1}.id'
-    print(create_sql)
+    #print(create_sql)
     con.execute(create_sql)
 
 
 def recreate_tables():
+    "Erzeuge Tabellen und Ansicht in Datenbank"
     recreate_atable()
     recreate_ltable()
     recreate_vtable()
 
 def write_header():
+    "Kopfzeile eine csv-Datei zur Eingabe"
     lst = table_struct.iloc[:,0].to_list()
     print(';'.join(lst))
 

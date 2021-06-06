@@ -18,9 +18,9 @@ DB_URI = os.getenv('DB_URI')
 if DB_URI is None:
     print("DB_URI nicht gesetzt")
     raise ValueError
-TABLE0 = 'aalben'
-TABLE1 = 'lalben'
-TABLEV = 'valben'
+TABLE0 = 'Alben'
+TABLE1 = 'Lieder'
+TABLEV = 'AlbenLieder'
 
 #struktur der Tabell wird hier gespeichert, letzte Spalte sind die Lieder
 install_dir = os.path.dirname(os.path.abspath(__file__))

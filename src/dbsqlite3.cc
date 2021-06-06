@@ -45,6 +45,7 @@ std::vector<std::string> dbsqlite3::getColumnNames(const std::string &tname)
     if(ok != SQLITE_OK)
     {
         std::cout << err << std::endl;
+	throw std::string(err);
         sqlite3_free(err);
     }
     return columns;
@@ -62,7 +63,7 @@ int CallbackQuery(void *_Pointer, int argc, char **argv, char **columnNames)
   
   for(int i=0; i<argc; i++)
     {    
-      gtk_list_store_set(content->gobj(), row.gobj(), i-1, argv[i], -1); 
+      gtk_list_store_set(content->gobj(), row.gobj(), i, argv[i], -1); 
     }
   return 0;
   
@@ -80,6 +81,7 @@ void dbsqlite3::query_fill_liststore(const std::string &query,
  if(ok != SQLITE_OK)
    {
      std::cout << err << std::endl;
+     throw std::string(err);
      sqlite3_free(err);
    }
 }

@@ -130,3 +130,5 @@ dmypy.json
 Aufgabe.txt
 *~
 src/sttalben_sqlist
+*.json
+data/*
