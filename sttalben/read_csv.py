@@ -5,10 +5,32 @@ Musikalbendatenbank
 - Einlesen csv
 """
 import argparse
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, Table, MetaData
 from sqlalchemy.exc import OperationalError, ProgrammingError
+from sqlalchemy.sql import select
 import pandas as pd
 from sttalben import *
+
+def insert_new(con, df, tablename, columns):
+    """
+    nur Datensätze einfügen die neu sind
+    con: Datenbankverbindung
+    df: pandas DataFrame
+    tablename: Tabellenname
+    columns: Liste der Tabellennamen die gleich sein müssen (oder nicht)
+    """
+    meta = MetaData()
+    table = Table(tablename, meta, autoload_with=con)
+    ins = table.insert()
+    for _,row in df.iterrows():
+        sel = select([table])
+        for col in columns:
+            sel = sel.where(table.c[col]==row[col])
+        res = con.execute(sel)
+        #print(row[1].to_list(), len(list(res)))
+        if len(list(res)) == 0:
+            con.execute(ins, row.to_dict())
+
 
 def fill_tablea(df, con):
     """
@@ -16,7 +38,8 @@ def fill_tablea(df, con):
     return pandas DataFrame mit ids
     """
     df_alben = df[spalten_ausser_lieder].groupby(spalten_ausser_lieder, as_index=False).first()
-    df_alben.to_sql(TABLE0, con, if_exists = 'append', index=False)
+    #df_alben.to_sql(TABLE0, con, if_exists = 'append', index=False)
+    insert_new(con, df_alben, TABLE0, spalten_ausser_lieder)
     #finde ids aus db
     df_db=pd.read_sql(TABLE0, con)
     df_id = df_alben.merge(df_db, on=spalten_ausser_lieder)
@@ -28,7 +51,8 @@ def fill_tableb(df, con, df_ids):
     """
     df_lieder = df.merge(df_ids, on=spalten_ausser_lieder)
     df_lieder = df_lieder[['id', table_struct.iloc[-1,0]]]
-    df_lieder.to_sql(TABLE1, con, if_exists = 'append', index=False)
+    #df_lieder.to_sql(TABLE1, con, if_exists = 'append', index=False)
+    insert_new(con, df_lieder, TABLE1, df_lieder.columns)
 
 def read_from_csv(fn):
     """
