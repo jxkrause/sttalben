@@ -3,7 +3,6 @@
 #include <vector>
 #include <sqlite3.h>
 #include <gtkmm.h>
-
 #include "mywin.h"
 #include "dbsqlite3.h"
 
@@ -14,7 +13,7 @@ int main(int argc, char *argv[])
     if(argc<3)
     {
         std::cout << "erwarte zwei Argumente:" << std::endl;
-        std::cout << "\t" << argv[0] << " sqlit3e-Datei Tabellenname" << std::endl;
+        std::cout << "\t" << argv[0] << " sqlite3-Datei Tabellenname" << std::endl;
         return -1;
     }
 

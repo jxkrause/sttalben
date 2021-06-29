@@ -132,3 +132,4 @@ Aufgabe.txt
 src/sttalben_sqlist
 *.json
 data/*
+src/*.o

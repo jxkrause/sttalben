@@ -26,10 +26,10 @@ void query_db(dbsqlite3 * con,
     {
       std::string eingabe = entries[i].get_text();
       if(!eingabe.empty())
-	{
-	  xquery = xquery + konjunktion + " " + columns[i] + " = '" + eingabe + "' ";
-	  konjunktion = "AND ";
-	}
+      {
+        xquery = xquery + konjunktion + " " + columns[i] + " = '" + eingabe + "' ";
+        konjunktion = "AND ";
+      }
     }
   con->query_fill_liststore(xquery, content);
 }
@@ -40,6 +40,8 @@ mywin::mywin(const std::vector<std::string> &columns,
 	     const std::string &tname):
   btok(Gtk::Stock::OK),
   title("Suche in Alben"),
+  labels(new Gtk::Label[columns.size()]),
+  entries(new Gtk::Entry[columns.size()]),
   con(_con),
   mcols(columns.size()),
   content(Gtk::ListStore::create(mcols))
@@ -60,7 +62,7 @@ mywin::mywin(const std::vector<std::string> &columns,
   //eingabe
   for(unsigned i=0; i<columns.size(); i++)
     {
-      labels[i] = Gtk::Label(columns[i]);
+      labels[i].set_text(columns[i]);
       grid.attach(labels[i], 0, i+1, 1,1);
       set_margins(labels[i]);
       

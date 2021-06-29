@@ -51,8 +51,8 @@ def search(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Datenbank Abfragen Musik Alben')
-    for row in table_struct.iterrows():
-        name = row[1].iloc[0]
+    for _,row in table_struct.iterrows():
+        name = row.iloc[0]
         parser.add_argument('-'+name[0], '--'+name, help=name)
     parser.add_argument('-f', '--full',
         type=int, default=-1,

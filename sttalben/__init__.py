@@ -22,7 +22,7 @@ TABLE0 = 'Alben'
 TABLE1 = 'Lieder'
 TABLEV = 'AlbenLieder'
 
-#struktur der Tabell wird hier gespeichert, letzte Spalte sind die Lieder
+#Struktur der Tabelle wird hier gespeichert, letzte Spalte sind die Lieder
 install_dir = os.path.dirname(os.path.abspath(__file__))
 conf_file = os.path.join(install_dir, 'columns.txt')
 table_struct = pd.read_csv(conf_file, sep=' ', header=None)

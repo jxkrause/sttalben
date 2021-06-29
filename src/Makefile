@@ -1,3 +1,12 @@
+all: sttalben_sqlist
 
-sttalben_sqlist: main.cc mywin.h mywin.cc dbsqlite3.h dbsqlite3.cc
-	g++  `pkg-config --cflags --libs gtkmm-3.0 sqlite3` main.cc dbsqlite3.cc mywin.cc -g -Wall -o $@
+CC=g++
+CFLAGS=$(shell /usr/bin/pkg-config --cflags gtkmm-3.0 sqlite3)
+LDFLAGS=$(shell /usr/bin/pkg-config --libs gtkmm-3.0 sqlite3)
+
+%.o:%.cc
+	$(CC) -g -Wall -c $(CFLAGS) $< -o $@
+
+
+sttalben_sqlist: main.o mywin.o dbsqlite3.o
+	$(CC) $(LDFLAGS) $^ -o $@
