@@ -32,7 +32,7 @@ def search(args):
         name = row[1].iloc[0]
         wert = args_dict.get(name, None)
         if not wert is None:
-            query = query + konjunktion[num] + f" {name} =  '{wert}' "
+            query = query + konjunktion[num] + f" {name} LIKE  '{wert}' "
             num = 1
     #print('-->',query)
 

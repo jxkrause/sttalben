@@ -27,7 +27,7 @@ void query_db(dbsqlite3 * con,
       std::string eingabe = entries[i].get_text();
       if(!eingabe.empty())
       {
-        xquery = xquery + konjunktion + " " + columns[i] + " = '" + eingabe + "' ";
+        xquery = xquery + konjunktion + " " + columns[i] + " LIKE '" + eingabe + "' ";
         konjunktion = "AND ";
       }
     }
