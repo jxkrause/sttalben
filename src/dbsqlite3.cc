@@ -45,8 +45,9 @@ std::vector<std::string> dbsqlite3::getColumnNames(const std::string &tname)
     if(ok != SQLITE_OK)
     {
         std::cout << err << std::endl;
-	throw std::string(err);
+	      std::string message(err);
         sqlite3_free(err);
+        throw message;
     }
     return columns;
 }

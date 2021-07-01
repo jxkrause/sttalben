@@ -128,7 +128,7 @@ def write_header():
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Lesen Alben aus csv')
-    parser.add_argument('fn', nargs='*', help='List von Dateinamen')
+    parser.add_argument('fn', nargs='*', help='Liste von Dateinamen (csv)')
     parser.add_argument('-r', '--recreate', help='Tabelle neugenerieren',
                     action='store_true')
     parser.add_argument('-t', '--template', 

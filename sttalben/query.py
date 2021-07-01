@@ -13,6 +13,9 @@ def search(args):
     """
     sucht in der Datenbank nach Alben und Liedern
     args ist ein Namespace-Objekt wie von 'argparse' erzeugt
+    returns:
+    * Kommentar
+    * DatadFrame
     """
     args_dict = vars(args)
     ausgabe = args.full
@@ -40,7 +43,7 @@ def search(args):
     con = create_engine(DB_URI)
     df_lieder = pd.read_sql_query(query, con)
     if df_lieder.empty:
-        return ("Kein Album gefunden", None)
+        return ("Kein Album oder Lied gefunden", None)
 
     #Auasgage
     if ausgabe == 0:
